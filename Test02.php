@@ -61,7 +61,7 @@ class getInTest extends TestCase
      */
     public function testGetIn($arr, $keys, $expected): void
     {
-        $this->assertEquals($expected, getIn($arr, $keys));
+        $this->assertSame($expected, getIn($arr, $keys));
     }
 
     public function providerGetIn(): array
