@@ -8,9 +8,13 @@
  * При вызове метода reset() устанавливает указатель массива на его первый элемент.
  */
 
-class Random extends AbstractRandom
+class Random
 {
-    private $randomNumbersSequence = [];
+    private $x0;
+    private $xNext;
+    private const M = 10;
+    private const A = 7;
+    private const C = 7;
 
     public function __construct(int $seed)
     {
@@ -18,28 +22,20 @@ class Random extends AbstractRandom
             throw new InvalidArgumentException('Начальное значение должно быть больше или равно 0!');
         }
 
-        $this->randomNumbersSequence[] = $seed;
-        $xn = $seed;
-        $m = random_int($seed + 1, $seed * 2);
-        $a = random_int(0, $m - 1);
-        $c = random_int(0, $m - 1);
-
-        for ($i = 0; $i < $m; $i++) {
-            $xnNext = ($a * $xn + $c) % $m;
-            $this->randomNumbersSequence[] = $xnNext;
-            $xn = $xnNext;
-        }
+        $this->x0 = $seed;
+        $this->xNext = $seed;
 
     }
 
     public function getNext(): int
     {
-        return next($this->randomNumbersSequence);
+        $this->xNext = (self::A * $this->xNext + self::C) % self::M;
+        return $this->xNext;
     }
 
     public function reset(): void
     {
-        reset($this->randomNumbersSequence);
+        $this->xNext = $this->x0;
     }
 }
 
