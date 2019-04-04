@@ -18,10 +18,10 @@ class RandomTest extends TestCase
     /**
      * @dataProvider providerException
      */
-    public function testException(): void
+    public function testException($seed): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Random(-3);
+        new Random($seed);
     }
 
     public function testReset(): void
